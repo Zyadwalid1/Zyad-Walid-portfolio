@@ -81,14 +81,6 @@ npm install
 npm run dev
 ```
 
-## 🎯 Usage
-
-### Default Admin Credentials
-- Email: `admin@portfolio.com`
-- Password: `admin123`
-
-**⚠️ Change these credentials after first login!**
-
 ### Admin Panel Features
 - ➕ Add/Edit/Delete Projects
 - 📝 Manage Skills
@@ -113,55 +105,6 @@ Each theme has both light and dark mode variants.
 - English (LTR)
 - Arabic (RTL) - Full RTL support
 
-## 📱 API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - Admin login
-- `POST /api/auth/register` - Register (disabled in production)
-- `GET /api/auth/me` - Get current user
-
-### Projects
-- `GET /api/projects` - Get all projects
-- `GET /api/projects/:id` - Get single project
-- `POST /api/projects` - Create project (admin)
-- `PUT /api/projects/:id` - Update project (admin)
-- `DELETE /api/projects/:id` - Delete project (admin)
-
-### Skills
-- `GET /api/skills` - Get all skills
-- `POST /api/skills` - Create skill (admin)
-- `PUT /api/skills/:id` - Update skill (admin)
-- `DELETE /api/skills/:id` - Delete skill (admin)
-
-### Profile
-- `GET /api/profile` - Get profile
-- `PUT /api/profile` - Update profile (admin)
-
-### Contact
-- `POST /api/contact` - Send contact message
-- `GET /api/contact` - Get all messages (admin)
-
-## 🔒 Security Features
-
-- JWT Authentication
-- Password hashing with bcrypt
-- Rate limiting
-- Helmet security headers
-- CORS configuration
-- Input validation
-
-## 🚀 Deployment
-
-### Backend
-- Deploy to: Heroku, Railway, Render, or DigitalOcean
-- Set environment variables
-- Connect to MongoDB Atlas
-
-### Frontend
-- Deploy to: Vercel, Netlify, or Cloudflare Pages
-- Update API base URL
-- Build command: `npm run build`
-
 ## 📄 License
 
 MIT License - feel free to use this for your own portfolio!
@@ -172,4 +115,4 @@ Contributions are welcome! Feel free to submit issues or pull requests.
 
 ## 📧 Support
 
-For support, email your-email@example.com or open an issue.
+For support, email zyad.walid.dev@gmail.com or open an issue.
