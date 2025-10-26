@@ -1,0 +1,29 @@
+[{
+  "_id": {
+    "$oid": "68fb675f9999c49344556492"
+  },
+  "degree": {
+    "en": "Bachelor of Commerce",
+    "ar": "بكالوريوس التجارة"
+  },
+  "institution": {
+    "en": "Faculty of Commerce, Business information System Department (BIS), Tanta University",
+    "ar": "كلية التجارة, قسم نظم معلومات الأعمال, جامعة طنطا"
+  },
+  "startDate": {
+    "$date": "2022-09-01T00:00:00.000Z"
+  },
+  "endDate": {
+    "$date": "2026-05-01T00:00:00.000Z"
+  },
+  "current": true,
+  "grade": "3.45",
+  "order": 0,
+  "createdAt": {
+    "$date": "2025-10-24T11:47:43.018Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-24T11:47:43.018Z"
+  },
+  "__v": 0
+}]
