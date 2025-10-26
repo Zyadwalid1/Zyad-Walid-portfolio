@@ -3,6 +3,21 @@ import { motion } from 'framer-motion';
 
 const CursorEffects = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  // Detect touch device
+  useEffect(() => {
+    const checkTouchDevice = () => {
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isMobile = window.innerWidth < 768;
+      setIsTouchDevice(hasTouch || isMobile);
+    };
+    
+    checkTouchDevice();
+    window.addEventListener('resize', checkTouchDevice);
+    
+    return () => window.removeEventListener('resize', checkTouchDevice);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -15,6 +30,9 @@ const CursorEffects = () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+
+  // Don't render on touch devices
+  if (isTouchDevice) return null;
 
   return (
     <>

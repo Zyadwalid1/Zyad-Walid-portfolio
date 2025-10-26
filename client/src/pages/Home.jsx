@@ -19,6 +19,7 @@ const Home = () => {
   const [profile, setProfile] = useState(null);
   const [featuredProjects, setFeaturedProjects] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -26,6 +27,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const [profileData, projectsData, skillsData] = await Promise.all([
         profileService.get(),
         projectService.getAll({ featured: true }),
@@ -36,6 +38,8 @@ const Home = () => {
       setSkills(skillsData.slice(0, 8));
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -81,6 +85,65 @@ const Home = () => {
     { icon: Users, label: t('about.clients'), value: profile?.stats?.happyClients || 0 },
     { icon: Award, label: t('about.awards'), value: profile?.stats?.awards || 0 },
   ];
+
+  // Show skeleton loader while fetching profile data
+  if (isLoading) {
+    return (
+      <div className="min-h-screen pb-0 md:pb-0">
+        {/* Hero Section Skeleton */}
+        <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+          {/* 3D Background */}
+          <div className="absolute inset-0 -z-10 opacity-60">
+            <ThreeJSBackground />
+          </div>
+
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary-500/10 via-transparent to-accent/10" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+
+          <div className="container-custom relative z-10">
+            <div className="flex items-center justify-center">
+              <div className="space-y-8 max-w-4xl text-center">
+                {/* Badge Skeleton */}
+                <div className="flex justify-center">
+                  <div className="h-10 w-40 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-full" />
+                </div>
+
+                {/* Title Skeleton */}
+                <div className="h-20 md:h-28 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-3/4 mx-auto" />
+
+                {/* Subtitle Skeleton */}
+                <div className="h-16 md:h-20 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-2/3 mx-auto" />
+
+                {/* Description Skeleton */}
+                <div className="space-y-3 max-w-2xl mx-auto">
+                  <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded" />
+                  <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-5/6 mx-auto" />
+                </div>
+
+                {/* Buttons Skeleton */}
+                <div className="flex flex-wrap gap-4 justify-center pt-4">
+                  <div className="h-12 w-40 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+                  <div className="h-12 w-40 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+                </div>
+
+                {/* Stats Skeleton */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="space-y-2">
+                      <div className="h-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-16 mx-auto" />
+                      <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-24 mx-auto" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pb-0 md:pb-0">

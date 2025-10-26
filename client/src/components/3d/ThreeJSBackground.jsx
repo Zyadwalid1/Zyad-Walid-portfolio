@@ -7,6 +7,7 @@ const ThreeJSBackground = () => {
     const { mode } = useThemeStore();
     const [meshMaterial, setMeshMaterial] = useState(null);
     const [pointLightObj, setPointLightObj] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         const currentMount = mountRef.current;
@@ -43,12 +44,37 @@ const ThreeJSBackground = () => {
         let mouseX = 0;
         let mouseY = 0;
         
+        // Mouse movement handler
         const onMouseMove = (event) => {
             mouseX = (event.clientX / window.innerWidth) * 2 - 1;
             mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
         };
         
+        // Touch movement handler for mobile
+        const onTouchMove = (event) => {
+            if (event.touches.length > 0) {
+                const touch = event.touches[0];
+                mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(touch.clientY / window.innerHeight) * 2 + 1;
+            }
+        };
+
+        // Device orientation handler for mobile tilt
+        const onDeviceOrientation = (event) => {
+            if (event.gamma !== null && event.beta !== null) {
+                // gamma: left/right tilt (-90 to 90)
+                // beta: front/back tilt (-180 to 180)
+                mouseX = event.gamma / 45; // Normalize to -2 to 2
+                mouseY = (event.beta - 45) / 45; // Normalize and center
+            }
+        };
+        
         window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('touchmove', onTouchMove, { passive: true });
+        window.addEventListener('deviceorientation', onDeviceOrientation);
+
+        // Mark as loaded after first render
+        setTimeout(() => setIsLoaded(true), 100);
 
         const animate = () => {
             requestAnimationFrame(animate);
@@ -74,6 +100,8 @@ const ThreeJSBackground = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('touchmove', onTouchMove);
+            window.removeEventListener('deviceorientation', onDeviceOrientation);
             if (currentMount && renderer.domElement) {
                 currentMount.removeChild(renderer.domElement);
             }
@@ -91,7 +119,12 @@ const ThreeJSBackground = () => {
         }
     }, [mode, meshMaterial, pointLightObj]);
 
-    return <div ref={mountRef} className="absolute inset-0 z-0" />;
+    return (
+        <div 
+            ref={mountRef} 
+            className={`absolute inset-0 z-0 transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        />
+    );
 };
 
 export default ThreeJSBackground;

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Search, ExternalLink, Github } from 'lucide-react';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
-import Loading from '../components/common/Loading';
+import { SkeletonProject } from '../components/common/Skeleton';
 import { projectService } from '../services/projectService';
 import { useLanguageStore } from '../store/languageStore';
 import api from '../utils/api';
@@ -90,7 +90,38 @@ const Projects = () => {
     },
   };
 
-  if (loading) return <Loading fullScreen />;
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-32 pb-20">
+        <div className="container-custom">
+          {/* Header Skeleton */}
+          <div className="text-center mb-12">
+            <div className="h-14 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-64 mx-auto mb-4" />
+            <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-96 mx-auto" />
+          </div>
+
+          {/* Search Bar Skeleton */}
+          <div className="mb-12">
+            <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg mb-6" />
+            
+            {/* Category Buttons Skeleton */}
+            <div className="flex gap-2 flex-wrap mb-8">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="h-10 w-24 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-full" />
+              ))}
+            </div>
+          </div>
+
+          {/* Projects Grid Skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <SkeletonProject key={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-32 pb-20">

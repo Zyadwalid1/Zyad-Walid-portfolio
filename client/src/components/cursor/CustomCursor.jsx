@@ -7,7 +7,22 @@ const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isOverModal, setIsOverModal] = useState(false);
   const [particles, setParticles] = useState([]);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const particleIdRef = useRef(0);
+
+  // Detect touch device
+  useEffect(() => {
+    const checkTouchDevice = () => {
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isMobile = window.innerWidth < 768; // md breakpoint
+      setIsTouchDevice(hasTouch || isMobile);
+    };
+    
+    checkTouchDevice();
+    window.addEventListener('resize', checkTouchDevice);
+    
+    return () => window.removeEventListener('resize', checkTouchDevice);
+  }, []);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -142,6 +157,9 @@ const CustomCursor = () => {
       backdropFilter: 'blur(4px)',
     }
   };
+
+  // Don't render custom cursor on touch devices
+  if (isTouchDevice) return null;
 
   // Hide cursor if not visible or over a modal
   if (!isVisible || isOverModal) return null;

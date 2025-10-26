@@ -15,6 +15,7 @@ const Contact = () => {
   const currentLang = i18n.language;
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,10 +29,13 @@ const Contact = () => {
 
   const fetchProfile = async () => {
     try {
+      setPageLoading(true);
       const data = await profileService.get();
       setProfile(data);
     } catch (error) {
       console.error('Error fetching profile:', error);
+    } finally {
+      setPageLoading(false);
     }
   };
 
@@ -76,6 +80,59 @@ const Contact = () => {
       value: profile?.location?.[currentLang] || profile?.location?.en || 'Your Location',
     },
   ];
+
+  // Show skeleton while loading profile data
+  if (pageLoading) {
+    return (
+      <div className="min-h-screen pt-32 pb-20">
+        <div className="container-custom">
+          {/* Header Skeleton */}
+          <div className="text-center mb-16">
+            <div className="h-14 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-64 mx-auto mb-4" />
+            <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-96 mx-auto" />
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Contact Form Skeleton */}
+            <div className="bg-surface rounded-xl p-8 border border-primary-500/10 space-y-6">
+              <div className="space-y-2">
+                <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-20" />
+                <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-20" />
+                <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-20" />
+                <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-20" />
+                <div className="h-32 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+              </div>
+              <div className="h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+            </div>
+
+            {/* Contact Info Skeleton */}
+            <div className="space-y-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-surface rounded-xl p-6 border border-primary-500/10">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg" />
+                    <div className="flex-1 space-y-3">
+                      <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-24" />
+                      <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded w-40" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-32 pb-20">

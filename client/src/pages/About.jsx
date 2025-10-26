@@ -5,7 +5,7 @@ import { Download, Briefcase, GraduationCap, Award, X } from 'lucide-react';
 import ThreeJSBackground from '../components/3d/ThreeJSBackground';
 import Button from '../components/common/Button';
 import Card from '../components/common/Card';
-import Loading from '../components/common/Loading';
+import { SkeletonProfile, SkeletonExperience } from '../components/common/Skeleton';
 import { profileService } from '../services/profileService';
 import { experienceService } from '../services/experienceService';
 import { educationService } from '../services/educationService';
@@ -68,7 +68,52 @@ const About = () => {
     },
   };
 
-  if (loading) return <Loading fullScreen />;
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-32 pb-20">
+        <div className="container-custom">
+          {/* Header Skeleton */}
+          <div className="text-center mb-16">
+            <div className="h-14 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-64 mx-auto mb-4" />
+          </div>
+
+          {/* Profile Skeleton */}
+          <div className="mb-20">
+            <SkeletonProfile />
+          </div>
+
+          {/* Experience Skeleton */}
+          <div className="mb-16">
+            <div className="h-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-48 mb-8" />
+            <div className="space-y-6">
+              <SkeletonExperience />
+              <SkeletonExperience />
+            </div>
+          </div>
+
+          {/* Education Skeleton */}
+          <div className="mb-16">
+            <div className="h-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-48 mb-8" />
+            <div className="space-y-6">
+              <SkeletonExperience />
+              <SkeletonExperience />
+            </div>
+          </div>
+
+          {/* Courses Skeleton */}
+          <div className="mb-16">
+            <div className="h-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-surface dark:via-primary-500/20 dark:to-surface animate-pulse rounded-lg w-48 mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <SkeletonExperience />
+              <SkeletonExperience />
+              <SkeletonExperience />
+              <SkeletonExperience />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-32 pb-20">
