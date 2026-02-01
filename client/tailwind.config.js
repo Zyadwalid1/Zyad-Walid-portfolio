@@ -38,7 +38,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Poppins', 'system-ui', 'sans-serif'],
-        arabic: ['Cairo', 'system-ui', 'sans-serif'],
+        arabic: ['Marhey', 'Cairo', 'system-ui', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

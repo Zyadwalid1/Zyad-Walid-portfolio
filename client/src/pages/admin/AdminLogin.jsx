@@ -60,7 +60,6 @@ const AdminLogin = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="admin@portfolio.com"
             />
             <Input
               label="Password"

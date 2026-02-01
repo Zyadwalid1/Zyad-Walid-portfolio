@@ -36,9 +36,13 @@ body {
   overflow-x: hidden;
 }
 
-/* Arabic font support */
-body[dir='rtl'] {
-  font-family: 'Cairo', system-ui, sans-serif;
+/* Arabic font support – Marhey for Arabic text only */
+html[lang='ar'] body,
+html[lang='ar'] body * {
+  font-family: 'Marhey', 'Cairo', system-ui, sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Selection */
